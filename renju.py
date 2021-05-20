@@ -109,6 +109,18 @@ def split_notation(file_in):
         for _ in range(3):
             data = f.readline()
         data = f.readline().split(';')
+        # when choice of swap
+        if data[1][0:3] == 'QPR':
+            notation.append([0, 'B', data[1][4:6]])
+            notation.append([0, 'W', data[1][7:9]])
+            notation.append([0, 'B', data[1][10:12]])
+            if data[2] == 'QSLB[]':
+                for i in range(3, len(data)):
+                    notation.append([1, data[i][0], data[i][2:4]])
+            else:
+                notation.append([3, 'W', data[2][5:7]])
+                for i in range(3, len(data)):
+                    notation.append([i+1, data[i][0], data[i][2:4]])
         for i in range(1, len(data)):
             notation.append([i-1, data[i][0], data[i][2:4]])
         num = int(f.readline())
