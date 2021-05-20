@@ -46,10 +46,10 @@ def draw_pos(drawing):
     for i in range(BOARD_COORDS):
         if i == 0 or i== 14:
             drawing.line((FRAME_LEFT + i*BETWEEN, FRAME_TOP - LINE_WIDTH, FRAME_LEFT + i*BETWEEN, FRAME_TOP + (BOARD_COORDS-1)*BETWEEN + LINE_WIDTH), fill = BLACK, width = 5)
-            drawing.line((FRAME_LEFT - LINE_WIDTH, FRAME_TOP + i*BETWEEN, BOARD_COORDS*BETWEEN + LINE_WIDTH, FRAME_TOP + i*BETWEEN), fill = BLACK, width = 5)
+            drawing.line((FRAME_LEFT - LINE_WIDTH, FRAME_TOP + i*BETWEEN, FRAME_LEFT + (BOARD_COORDS-1)*BETWEEN + LINE_WIDTH, FRAME_TOP + i*BETWEEN), fill = BLACK, width = 5)
         else:
             drawing.line((FRAME_LEFT + i*BETWEEN, FRAME_TOP, FRAME_LEFT + i*BETWEEN, FRAME_TOP + (BOARD_COORDS-1)*BETWEEN + LINE_WIDTH), fill = BLACK, width = 1)
-            drawing.line((FRAME_LEFT, FRAME_TOP + i*BETWEEN, BOARD_COORDS*BETWEEN + LINE_WIDTH, FRAME_TOP + i*BETWEEN), fill = BLACK, width = 1)
+            drawing.line((FRAME_LEFT, FRAME_TOP + i*BETWEEN, FRAME_LEFT + (BOARD_COORDS-1)*BETWEEN, FRAME_TOP + i*BETWEEN), fill = BLACK, width = 1)
     # drawing dots
     drawing.ellipse((FRAME_LEFT + 3*BETWEEN - DOTS, FRAME_TOP + 3*BETWEEN - DOTS, FRAME_LEFT + 3*BETWEEN + DOTS, FRAME_TOP + 3*BETWEEN + DOTS), fill = BLACK, outline = BLACK)
     drawing.ellipse((FRAME_LEFT + 3*BETWEEN - DOTS, FRAME_TOP + 11*BETWEEN - DOTS, FRAME_LEFT + 3*BETWEEN + DOTS, FRAME_TOP + 11*BETWEEN + DOTS), fill = BLACK, outline = BLACK)
