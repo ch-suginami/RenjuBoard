@@ -140,10 +140,23 @@ def split_notation(file_in):
     notation = []
     ans = []
     with open(file_in, 'r') as f:
-        # read dummy data
-        for _ in range(3):
-            data = f.readline()
-        data = f.readline().split(';')
+        notation = []
+        tmp_data = []
+        data = []
+        # read notation part of data
+        while True:
+            r_data = f.readline().replace('\n', '')
+            if r_data[-1] == ')':
+                tmp_data.append(r_data)
+                break
+            else:
+                tmp_data.append(r_data)
+        # editing notation data
+        tmp_data = ''.join(tmp_data).split(';')
+        tmp_data[-1] = tmp_data[-1].replace(')', '')
+        # starting from 1 not 2 because information data includes after codes
+        for i in range(1, len(tmp_data)):
+            data.append(tmp_data[i])
         # when choice of swap
         if data[1][0:3] == 'QPR':
             notation.append([0, 'B', data[1][4:6]])
