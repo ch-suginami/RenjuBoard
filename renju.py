@@ -140,7 +140,6 @@ def split_notation(file_in):
     notation = []
     ans = []
     with open(file_in, 'r') as f:
-        notation = []
         tmp_data = []
         data = []
         # read notation part of data
