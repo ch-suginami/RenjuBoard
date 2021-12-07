@@ -24,6 +24,7 @@ SOFTWARE.
 
 import os
 import sys
+
 from PIL import Image, ImageDraw, ImageFont
 
 # CONSTATNS
@@ -43,38 +44,52 @@ ALPHABET = [chr(ord('A') + i) for i in range(26)]
 font_coords = ImageFont.truetype('SourceHanSans-Normal.otf', 26)
 font_num = ImageFont.truetype('SourceHanSans-Normal.otf', 26)
 
+
 def draw_pos(drawing):
     """Drawing Boards Lines and Dots
 
     Args:
-        drawing (Image Object): Blank Image Object
+        drawing (Image Object): Blank Image
 
     Returns:
         Image Object: Image Object with drawn base line and dots
     """
     for i in range(BOARD_COORDS):
-        if i == 0 or i == 14:
-            drawing.line((FRAME_LEFT + i*BETWEEN, FRAME_TOP - LINE_WIDTH, FRAME_LEFT + i *
-                        BETWEEN, FRAME_TOP + (BOARD_COORDS-1)*BETWEEN + LINE_WIDTH), fill=BLACK, width=5)
-            drawing.line((FRAME_LEFT - LINE_WIDTH, FRAME_TOP + i*BETWEEN, FRAME_LEFT + (
-                BOARD_COORDS-1)*BETWEEN + LINE_WIDTH, FRAME_TOP + i*BETWEEN), fill=BLACK, width=5)
+        if i in (0, 14):
+            drawing.line((FRAME_LEFT + i * BETWEEN, FRAME_TOP - LINE_WIDTH,
+                          FRAME_LEFT + i * BETWEEN, FRAME_TOP +
+                          (BOARD_COORDS - 1) * BETWEEN + LINE_WIDTH),
+                         fill=BLACK, width=5)
+            drawing.line((FRAME_LEFT - LINE_WIDTH, FRAME_TOP + i * BETWEEN,
+                          FRAME_LEFT + (BOARD_COORDS - 1) * BETWEEN +
+                          LINE_WIDTH, FRAME_TOP + i * BETWEEN),
+                         fill=BLACK, width=5)
         else:
-            drawing.line((FRAME_LEFT + i*BETWEEN, FRAME_TOP, FRAME_LEFT + i*BETWEEN,
-                        FRAME_TOP + (BOARD_COORDS-1)*BETWEEN + LINE_WIDTH), fill=BLACK, width=1)
-            drawing.line((FRAME_LEFT, FRAME_TOP + i*BETWEEN, FRAME_LEFT +
-                        (BOARD_COORDS-1)*BETWEEN, FRAME_TOP + i*BETWEEN), fill=BLACK, width=1)
+            drawing.line((FRAME_LEFT + i * BETWEEN, FRAME_TOP, FRAME_LEFT +
+                          i * BETWEEN, FRAME_TOP + (BOARD_COORDS - 1) * BETWEEN
+                          + LINE_WIDTH), fill=BLACK, width=1)
+            drawing.line((FRAME_LEFT, FRAME_TOP + i * BETWEEN, FRAME_LEFT +
+                         (BOARD_COORDS - 1) * BETWEEN, FRAME_TOP +
+                         i * BETWEEN), fill=BLACK, width=1)
     # drawing dots
-    drawing.ellipse((FRAME_LEFT + 3*BETWEEN - DOTS, FRAME_TOP + 3*BETWEEN - DOTS, FRAME_LEFT +
-                    3*BETWEEN + DOTS, FRAME_TOP + 3*BETWEEN + DOTS), fill=BLACK, outline=BLACK)
-    drawing.ellipse((FRAME_LEFT + 3*BETWEEN - DOTS, FRAME_TOP + 11*BETWEEN - DOTS, FRAME_LEFT +
-                    3*BETWEEN + DOTS, FRAME_TOP + 11*BETWEEN + DOTS), fill=BLACK, outline=BLACK)
-    drawing.ellipse((FRAME_LEFT + 11*BETWEEN - DOTS, FRAME_TOP + 3*BETWEEN - DOTS, FRAME_LEFT +
-                    11*BETWEEN + DOTS, FRAME_TOP + 3*BETWEEN + DOTS), fill=BLACK, outline=BLACK)
-    drawing.ellipse((FRAME_LEFT + 11*BETWEEN - DOTS, FRAME_TOP + 11*BETWEEN - DOTS, FRAME_LEFT +
-                    11*BETWEEN + DOTS, FRAME_TOP + 11*BETWEEN + DOTS), fill=BLACK, outline=BLACK)
-    drawing.ellipse((FRAME_LEFT + 7*BETWEEN - DOTS, FRAME_TOP + 7*BETWEEN - DOTS, FRAME_LEFT +
-                    7*BETWEEN + DOTS, FRAME_TOP + 7*BETWEEN + DOTS), fill=BLACK, outline=BLACK)
+    drawing.ellipse((FRAME_LEFT + 3 * BETWEEN - DOTS, FRAME_TOP +
+                     3 * BETWEEN - DOTS, FRAME_LEFT + 3 * BETWEEN + DOTS,
+                     FRAME_TOP + 3 * BETWEEN + DOTS),
+                    fill=BLACK, outline=BLACK)
+    drawing.ellipse((FRAME_LEFT + 3 * BETWEEN - DOTS, FRAME_TOP + 11 * BETWEEN
+                     - DOTS, FRAME_LEFT + 3 * BETWEEN + DOTS, FRAME_TOP +
+                     11 * BETWEEN + DOTS), fill=BLACK, outline=BLACK)
+    drawing.ellipse((FRAME_LEFT + 11 * BETWEEN - DOTS, FRAME_TOP + 3 * BETWEEN
+                     - DOTS, FRAME_LEFT + 11 * BETWEEN + DOTS, FRAME_TOP +
+                     3 * BETWEEN + DOTS), fill=BLACK, outline=BLACK)
+    drawing.ellipse((FRAME_LEFT + 11 * BETWEEN - DOTS, FRAME_TOP + 11 * BETWEEN
+                     - DOTS, FRAME_LEFT + 11 * BETWEEN + DOTS, FRAME_TOP +
+                     11 * BETWEEN + DOTS), fill=BLACK, outline=BLACK)
+    drawing.ellipse((FRAME_LEFT + 7 * BETWEEN - DOTS, FRAME_TOP + 7 * BETWEEN -
+                     DOTS, FRAME_LEFT + 7 * BETWEEN + DOTS, FRAME_TOP +
+                     7 * BETWEEN + DOTS), fill=BLACK, outline=BLACK)
     return drawing
+
 
 def draw_letters(drawing):
     """Drawing Letters and Numbers of Coordinations
@@ -88,91 +103,121 @@ def draw_letters(drawing):
 
     for i in range(1, BOARD_COORDS + 1):
         if i < 10:
-            drawing.text((18, (BOARD_COORDS - i)*BETWEEN + 20), str(i), font=font_coords, fill=BLACK)
+            drawing.text((18, (BOARD_COORDS - i) * BETWEEN + 20), str(i),
+                         font=font_coords, fill=BLACK)
         else:
-            drawing.text((10, (BOARD_COORDS - i)*BETWEEN + 20), str(i), font=font_coords, fill=BLACK)
-        drawing.text((i*BETWEEN - 3, FIG_SIZE - 40), ALPHABET[i-1], font=font_coords, fill=BLACK)
+            drawing.text((10, (BOARD_COORDS - i) * BETWEEN + 20), str(i),
+                         font=font_coords, fill=BLACK)
+        drawing.text((i * BETWEEN - 3, FIG_SIZE - 40), ALPHABET[i-1],
+                     font=font_coords, fill=BLACK)
     return drawing
+
 
 def conv2num(letter):
     """Converting an alphabet to the related number
 
     Args:
-        letter (String): A letter which is needed to convert
+        letter (string): A letter which is needed to convert
 
     Returns:
-        Int: Converted number
+        int: Converted number
     """
     return ALPHABET.index(letter)
+
 
 def draw_stones(drawing, pos_x, pos_y, color, num=0, last=False):
     """Drawing Stones
 
     Args:
         drawing (Image Object): Image Object with base line and numbers
-        pos_x (Int): Position of x
-        pos_y (Int): Position of y
-        color (String): Color of a stone to draw
-        num (int, optional): Drawing a number with its stone. Defaults to 0(no drawing).
-        last (bool, optional): Whether information of drawing last stone or not. Defaults to False.
+        pos_x (int): Position of x
+        pos_y (int): Position of y
+        color (string): Color of a stone to draw
+        num (int, optional):
+            Drawing a number with its stone. Defaults to 0 (no drawing).
+        last (bool, optional):
+            Whether information of drawing last stone or not.
+            Defaults to False.
 
     Returns:
         Image Object: Image with stones.
     """
     DIFF = 8
     if color == "B":
-        drawing.ellipse((FRAME_LEFT + pos_x*BETWEEN - STONE, FRAME_TOP + pos_y*BETWEEN - STONE, FRAME_LEFT +
-                        pos_x*BETWEEN + STONE, FRAME_TOP + pos_y*BETWEEN + STONE), fill=BLACK, outline=BLACK)
+        drawing.ellipse((FRAME_LEFT + pos_x * BETWEEN - STONE, FRAME_TOP +
+                         pos_y * BETWEEN - STONE, FRAME_LEFT + pos_x * BETWEEN
+                         + STONE, FRAME_TOP + pos_y * BETWEEN + STONE),
+                        fill=BLACK, outline=BLACK)
         if num >= 10:
-            drawing.text((FRAME_LEFT + pos_x*BETWEEN - STONE//2, FRAME_TOP +
-                        pos_y*BETWEEN - STONE*3//4), str(num), font=font_num, fill=WHITE)
+            drawing.text((FRAME_LEFT + pos_x * BETWEEN - STONE // 2, FRAME_TOP
+                          + pos_y * BETWEEN - STONE * 3 // 4), str(num),
+                         font=font_num, fill=WHITE)
         elif 0 < num < 10:
-            drawing.text((FRAME_LEFT + pos_x*BETWEEN - STONE//4, FRAME_TOP +
-                        pos_y*BETWEEN - STONE*3//4), str(num), font=font_num, fill=WHITE)
+            drawing.text((FRAME_LEFT + pos_x * BETWEEN - STONE // 4, FRAME_TOP
+                          + pos_y * BETWEEN - STONE * 3 // 4), str(num),
+                         font=font_num, fill=WHITE)
         if last:
-            drawing.ellipse((FRAME_LEFT + pos_x*BETWEEN - int(DOTS*0.7), FRAME_TOP + pos_y*BETWEEN - STONE//2 - int(DOTS*0.7) - DIFF, FRAME_LEFT +
-                            pos_x*BETWEEN + int(DOTS*0.7), FRAME_TOP + pos_y*BETWEEN - STONE//2 + int(DOTS*0.7) - DIFF), fill=WHITE, outline=BLACK)
+            drawing.ellipse((FRAME_LEFT + pos_x * BETWEEN - int(DOTS * 0.7),
+                             FRAME_TOP + pos_y * BETWEEN - STONE // 2 -
+                             int(DOTS * 0.7) - DIFF, FRAME_LEFT +
+                             pos_x * BETWEEN + int(DOTS * 0.7), FRAME_TOP +
+                             pos_y * BETWEEN - STONE // 2 + int(DOTS * 0.7) -
+                             DIFF), fill=WHITE, outline=BLACK)
     else:
-        drawing.ellipse((FRAME_LEFT + pos_x*BETWEEN - STONE, FRAME_TOP + pos_y*BETWEEN - STONE, FRAME_LEFT +
-                        pos_x*BETWEEN + STONE, FRAME_TOP + pos_y*BETWEEN + STONE), fill=WHITE, outline=BLACK)
+        drawing.ellipse((FRAME_LEFT + pos_x * BETWEEN - STONE, FRAME_TOP +
+                         pos_y * BETWEEN - STONE, FRAME_LEFT + pos_x * BETWEEN
+                         + STONE, FRAME_TOP + pos_y * BETWEEN + STONE),
+                        fill=WHITE, outline=BLACK)
         if num >= 10:
-            drawing.text((FRAME_LEFT + pos_x*BETWEEN - STONE//2, FRAME_TOP +
-                        pos_y*BETWEEN - STONE*3//4), str(num), font=font_num, fill=BLACK)
+            drawing.text((FRAME_LEFT + pos_x * BETWEEN - STONE // 2, FRAME_TOP
+                          + pos_y * BETWEEN - STONE * 3 // 4), str(num),
+                         font=font_num, fill=BLACK)
         elif 0 < num < 10:
-            drawing.text((FRAME_LEFT + pos_x*BETWEEN - STONE//4, FRAME_TOP +
-                        pos_y*BETWEEN - STONE*3//4), str(num), font=font_num, fill=BLACK)
+            drawing.text((FRAME_LEFT + pos_x * BETWEEN - STONE // 4, FRAME_TOP
+                          + pos_y * BETWEEN - STONE * 3 // 4), str(num),
+                         font=font_num, fill=BLACK)
         if last:
-            drawing.ellipse((FRAME_LEFT + pos_x*BETWEEN - int(DOTS*0.7), FRAME_TOP + pos_y*BETWEEN - STONE//2 - int(DOTS*0.7) - DIFF, FRAME_LEFT +
-                            pos_x*BETWEEN + int(DOTS*0.7), FRAME_TOP + pos_y*BETWEEN - STONE//2 + int(DOTS*0.7) - DIFF), fill=BLACK, outline=BLACK)
+            drawing.ellipse((FRAME_LEFT + pos_x * BETWEEN - int(DOTS * 0.7),
+                             FRAME_TOP + pos_y * BETWEEN - STONE // 2 -
+                             int(DOTS * 0.7) - DIFF, FRAME_LEFT + pos_x*BETWEEN
+                             + int(DOTS * 0.7), FRAME_TOP + pos_y*BETWEEN -
+                             STONE // 2 + int(DOTS * 0.7) - DIFF),
+                            fill=BLACK, outline=BLACK)
     return drawing
+
 
 def draw_tree(drawing, pos_x, pos_y, letter):
     """Drawing tree for explanations
 
     Args:
         drawing (Image Object): Image with stones
-        pos_x (Int): Position of x
-        pos_y (Int): Position of y
-        letter (String): Drawing a letter with its stone
+        pos_x (int): Position of x
+        pos_y (int): Position of y
+        letter (string): Drawing a letter with its stone
 
     Returns:
         Image Object: Image with letters
     """
     BOX = 25
-    drawing.rectangle((FRAME_LEFT + pos_x*BETWEEN - BOX, FRAME_TOP + pos_y*BETWEEN - BOX,
-                    FRAME_LEFT + pos_x*BETWEEN + BOX, FRAME_TOP + pos_y*BETWEEN + BOX), fill=WHITE)
-    drawing.text((FRAME_LEFT + pos_x*BETWEEN - STONE//4, FRAME_TOP +
-                pos_y*BETWEEN - STONE*3//4), letter, font=font_num, fill=BLACK)
+    drawing.rectangle((FRAME_LEFT + pos_x * BETWEEN - BOX, FRAME_TOP +
+                       pos_y * BETWEEN - BOX, FRAME_LEFT + pos_x * BETWEEN +
+                       BOX, FRAME_TOP + pos_y * BETWEEN + BOX), fill=WHITE)
+    drawing.text((FRAME_LEFT + pos_x * BETWEEN - STONE // 4, FRAME_TOP +
+                  pos_y * BETWEEN - STONE * 3 // 4), letter,
+                 font=font_num, fill=BLACK)
     return drawing
+
 
 def split_notation(file_in):
     """Splitting notation from the sgf file
 
     Args:
-        file_in (String): File name of the input file
+        file_in (string): File name of the input file
 
     Returns:
-        List: [(Int) Number of trees for answer figures, (String) Notation of base image, (String List) Notaions of anster images]
+        List: [(int) Number of trees for answer figures,
+               (string) Notation of base image,
+               (list of strings) Notaions of anster images]
     """
     notation = []
     ans = []
@@ -219,6 +264,7 @@ def split_notation(file_in):
             ans.append(wr_data)
     return [num, notation, ans]
 
+
 def main():
     """Main parts for drawing images
     """
@@ -243,7 +289,8 @@ def main():
         if i == notation[0] - 1:
             pos_x = conv2num(notation[1][i][2][0].upper())
             pos_y = conv2num(notation[1][i][2][1].upper())
-            draw_q = draw_stones(draw_q, pos_x, pos_y, notation[1][i][1], last=True)
+            draw_q = draw_stones(draw_q, pos_x, pos_y, notation[1][i][1],
+                                 last=True)
             draw_a = draw_stones(draw_a, pos_x, pos_y, notation[1][i][1])
             # odd = Black, even = White
             order = i % 2 + 1
@@ -259,7 +306,8 @@ def main():
     # drawing answer part
     for i in range(len(notation[2])):
         fa_out = "A" + \
-            os.path.splitext(os.path.basename(args[1]))[0] + '_' + str(i+1) + '.png'
+            os.path.splitext(os.path.basename(args[1]))[0] + '_' +\
+            str(i+1) + '.png'
         im_ai = im_a.copy()
         draw_ai = ImageDraw.Draw(im_ai)
         for j in range(len(notation[2][i])):
@@ -279,6 +327,7 @@ def main():
                 draw_ai = draw_tree(draw_ai, pos_x, pos_y, letter)
             order += 1
         im_ai.save(fa_out)
+
 
 if __name__ == '__main__':
     main()
